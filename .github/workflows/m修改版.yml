@@ -1,4 +1,4 @@
-name: (新版米/欧加真通用) 6.12.23 GKI内核快速构建
+name: ⭐
 
 env:
   TZ: Asia/Shanghai
@@ -27,7 +27,7 @@ on:
         description: '是否开启kpm(使用KpatchNext独立实现kpm(支持任意KSU/面具环境); 不需要可保持默认关闭)'
         required: true
         type: boolean
-        default: 'false'
+        default: 'true'
       lz4_enable:
         description: '是否安装 lz4 1.10.0+zstd 1.5.7 补丁'
         required: true
@@ -37,12 +37,12 @@ on:
         description: '是否安装 LZ4KD 补丁(若已开启lz4+zstd补丁则可不开启)'
         required: true
         type: boolean
-        default: 'false'
+        default: 'true'
       bbr_enable:
         description: "是否启用bbr算法(优化上行数据,对手机日用无太大意义甚至可能负优化;false关闭,true仅加入算法,default启用算法并设为默认)"
         required: true
         type: choice
-        default: 'false'
+        default: 'true'
         options:
           - 'false'
           - 'true'
@@ -51,7 +51,7 @@ on:
         description: '是否启用Droidspaces容器支持(轻量化的完整Linux容器支持;false关闭,standard开启容器+ntsync支持,extend开启更多测试支持项)'
         required: true
         type: choice
-        default: 'false'
+        default: 'extend'
         options:
           - 'false'
           - 'standard'
@@ -70,7 +70,7 @@ on:
         description: '是否启用Re-Kernel支持(与Freezer/NoActive等软件配合, 提升应用冻结能力)'
         required: true
         type: boolean
-        default: 'false'
+        default: 'true'
       baseband_guard:
         description: '是否开启内核级基带保护(阻止一切对非用户分区的写入，有效防止格机)'
         required: true
@@ -243,10 +243,10 @@ jobs:
         run: |
           cd kernel_workspace
           echo "正在配置ReSukiSU..."
-          curl -LSs "https://raw.githubusercontent.com/ReSukiSU/ReSukiSU/refs/heads/main/kernel/setup.sh" | bash -s main
+          curl -LSs "https://raw.githubusercontent.com/ReSukiSU/ReSukiSU/refs/heads/suto-hook/kernel/setup.sh" | bash -s suto-hook
           echo 'CONFIG_KSU_FULL_NAME_FORMAT="🌸"' >> ./common/arch/arm64/configs/gki_defconfig
           cd ./KernelSU
-          KSU_VERSION=$(expr $(git rev-list --count main) + 30700 2>/dev/null || echo 114514)
+          KSU_VERSION=$(expr $(git rev-list --count suto-hook) + 30700 2>/dev/null || echo 114514)
           echo "KSUVER=$KSU_VERSION" >> $GITHUB_ENV
           echo "ksuver=$KSU_VERSION" >> $GITHUB_OUTPUT
 
